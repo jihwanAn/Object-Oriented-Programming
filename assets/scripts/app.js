@@ -1,9 +1,10 @@
 class Product {
-  title = "DEFAULT";
-  imageUrl;
-  description;
-  price;
+  // title = "DEFAULT";
+  // imageUrl;
+  // description;
+  // price;
 
+  // 생성자 함수
   constructor(title, image, desc, price) {
     (this.title = title),
       (this.imageUrl = image),
@@ -12,8 +13,30 @@ class Product {
   }
 }
 
-const productList = {
-  products: [
+class ProductItem {
+  constructor(product) {
+    this.product = product;
+  }
+
+  render() {
+    const prodEl = document.createElement("li");
+    prodEl.className = "product-item";
+    prodEl.innerHTML = `
+      <div>
+        <img src="${this.product.imageUrl}" alt=${this.product.title}>
+        <div>
+          <h2>${this.product.title}</h2>
+          <h3>${this.product.price}</h3>
+          <p>${this.product.description}</p>
+          <button>Add to Cart</button>
+        </div>
+      </div>`;
+    return prodEl;
+  }
+}
+
+class ProductList {
+  products = [
     new Product(
       "A dish",
       "https://media.worksout.co.kr/resized/live/Y1234SLFHD03455001/Y1234SLFHD03455001-0.JPG",
@@ -26,28 +49,22 @@ const productList = {
       "A Carpet which you might lick - or not.",
       89.99
     ),
-  ],
+  ];
+
+  constructor() {}
+
   render() {
     const renderHook = document.getElementById("app");
     const prodList = document.createElement("ul");
     prodList.className = "product-list";
     for (const prod of this.products) {
-      const prodEl = document.createElement("li");
-      prodEl.className = "product-item";
-      prodEl.innerHTML = `
-      <div>
-        <img src="${prod.imageUrl}" alt=${prod.title}>
-        <div>
-          <h2>${prod.title}</h2>
-          <h3>${prod.price}</h3>
-          <p>${prod.description}</p>
-          <button>Add to Cart</button>
-        </div>
-      </div>`;
+      const productItem = new ProductItem(prod);
+      const prodEl = productItem.render();
       prodList.append(prodEl);
     }
     renderHook.append(prodList);
-  },
-};
+  }
+}
 
+const productList = new ProductList();
 productList.render();
