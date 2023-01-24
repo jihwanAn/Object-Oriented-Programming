@@ -25,9 +25,14 @@ body {
   object-fit: cover;
 }
 
+.product-item__content {
+  padding: 1rem;
+  text-align: center;
+}
+
 .product-item h2,
 .product-item h3 {
-  margin: 10px 0 1rem 20px;
+  margin: 0 0 1rem 0;
 }
 
 button {

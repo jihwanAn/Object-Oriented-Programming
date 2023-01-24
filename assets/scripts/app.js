@@ -6,28 +6,44 @@ class Product {
 
   // 생성자 함수
   constructor(title, image, desc, price) {
-    (this.title = title),
-      (this.imageUrl = image),
-      (this.description = desc),
-      (this.price = price);
+    this.title = title;
+    this.imageUrl = image;
+    this.description = desc;
+    this.price = price;
   }
 }
 
 class ShoppingCart {
-  item = [];
+  items = [];
+
+  set cartItems(value) {
+    this.items = value;
+    this.totalOutput.innerHTML = `<h2>Total: \$${this.totalAmount.toFixed(
+      2
+    )}</h2>`;
+  }
+
+  get totalAmount() {
+    const sum = this.items.reduce(
+      (prevValue, curItem) => prevValue + curItem.price,
+      0
+    );
+    return sum;
+  }
 
   addProduct(product) {
-    this.items.push(product);
-    this.totalOutput.innerHTML = `<h2>Total: ${1}</h2>`;
+    const updatedItems = [...this.items];
+    updatedItems.push(product);
+    this.cartItems = updatedItems;
   }
 
   render() {
     const cartEl = document.createElement("section");
     cartEl.innerHTML = `
-      <h2>Total: ${0}</h2>
-      <buuton>Order Now!</button>
+      <h2>Total: \$${0}</h2>
+      <button>Order Now!</button>
     `;
-    cartEl.classList = "cart";
+    cartEl.className = "cart";
     this.totalOutput = cartEl.querySelector("h2");
     return cartEl;
   }
@@ -47,10 +63,10 @@ class ProductItem {
     prodEl.className = "product-item";
     prodEl.innerHTML = `
       <div>
-        <img src="${this.product.imageUrl}" alt=${this.product.title}>
-        <div>
+        <img src="${this.product.imageUrl}" alt="${this.product.title}">
+        <div class="product-item__content">
           <h2>${this.product.title}</h2>
-          <h3>${this.product.price}</h3>
+          <h3>\$${this.product.price}</h3>
           <p>${this.product.description}</p>
           <button>Add to Cart</button>
         </div>
@@ -114,7 +130,7 @@ class App {
     this.cart = shop.cart;
   }
 
-  static addProductCart(product) {
+  static addProductToCart(product) {
     this.cart.addProduct(product);
   }
 }
