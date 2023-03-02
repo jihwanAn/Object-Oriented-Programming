@@ -64,7 +64,12 @@ class ShoppingCart extends Component {
   }
 
   constructor(renderHookId) {
-    super(renderHookId);
+    super(renderHookId, false);
+    this.orderProducts = () => {
+      console.log("ordering");
+      console.log(this.items);
+    };
+    this.render();
   }
 
   addProduct(product) {
@@ -79,6 +84,9 @@ class ShoppingCart extends Component {
       <h2>Total: \$${0}</h2>
       <button>Order Now!</button>
     `;
+    const orderButton = cartEl.querySelector("button");
+    // orderButton.addEventListener("click", () => this.orderProducts());
+    orderButton.addEventListener("click", this.orderProducts);
     this.totalOutput = cartEl.querySelector("h2");
   }
 }
@@ -117,6 +125,7 @@ class ProductList extends Component {
 
   constructor(renderHookId) {
     super(renderHookId);
+    this.render();
     this.fetchProducts();
   }
 
@@ -124,13 +133,13 @@ class ProductList extends Component {
     this.products = [
       new Product(
         "A Pillow",
-        "https://www.maxpixel.net/static/photo/2x/Soft-Pillow-Green-Decoration-Deco-Snuggle-1241878.jpg",
+        "https://media.worksout.co.kr/resized/live/HU22FWLFHD00040001/HU22FWLFHD00040001-0.jpg",
         "A soft pillow!",
         19.99
       ),
       new Product(
         "A Carpet",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Ardabil_Carpet.jpg/397px-Ardabil_Carpet.jpg",
+        "https://media.worksout.co.kr/resized/live/Y1234SLFHD03455001/Y1234SLFHD03455001-0.JPG",
         "A carpet which you might like - or not.",
         89.99
       ),
