@@ -121,16 +121,18 @@ class ProductItem extends Component {
 }
 
 class ProductList extends Component {
-  products = [];
+  // 해당 클레스, 구축된 객체 안에서 사용해야 할 경우
+  #products = [];
 
   constructor(renderHookId) {
-    super(renderHookId);
+    // super생성자 호출시, 렌더링을 false로 설정. 자체적 render 호출
+    super(renderHookId, false);
     this.render();
     this.fetchProducts();
   }
 
   fetchProducts() {
-    this.products = [
+    this.#products = [
       new Product(
         "A Pillow",
         "https://media.worksout.co.kr/resized/live/HU22FWLFHD00040001/HU22FWLFHD00040001-0.jpg",
@@ -148,7 +150,7 @@ class ProductList extends Component {
   }
 
   renderProducts() {
-    for (const prod of this.products) {
+    for (const prod of this.#products) {
       new ProductItem(prod, "prod-list");
     }
   }
@@ -157,7 +159,7 @@ class ProductList extends Component {
     this.createRootElement("ul", "product-list", [
       new ElementAttribute("id", "prod-list"),
     ]);
-    if (this.products && this.products.length > 0) {
+    if (this.#products && this.#products.length > 0) {
       this.renderProducts();
     }
   }
